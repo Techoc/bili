@@ -26,6 +26,5 @@ jobs:
         git config --local user.email "techoc@foxmail.com"
         git config --local user.name "techoc"
         git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/bili
-        git pull --rebase
         git commit --allow-empty -m "a commit a day keeps your girlfriend away"
         git push
