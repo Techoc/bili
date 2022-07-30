@@ -18,7 +18,8 @@ var wg sync.WaitGroup
 
 func main() {
 	defer ants.Release()
-	runTimes := 999999999
+	//runTimes := 999999999
+	runTimes := 5000
 	// Use the pool with a function,
 	// set 10 to the capacity of goroutine pool and 1 second for expired duration.
 	p, _ := ants.NewPoolWithFunc(6, func(i interface{}) {
