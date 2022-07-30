@@ -19,7 +19,7 @@ var wg sync.WaitGroup
 func main() {
 	defer ants.Release()
 	//runTimes := 999999999
-	runTimes := 5000
+	runTimes := 10000
 	// Use the pool with a function,
 	// set 10 to the capacity of goroutine pool and 1 second for expired duration.
 	p, _ := ants.NewPoolWithFunc(6, func(i interface{}) {
@@ -28,7 +28,7 @@ func main() {
 	})
 	defer p.Release()
 	// Submit tasks one by one.
-	for i := 1650; i < runTimes; i++ {
+	for i := 5000; i < runTimes; i++ {
 		wg.Add(1)
 		_ = p.Invoke(int64(i))
 	}
