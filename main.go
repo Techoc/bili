@@ -24,7 +24,7 @@ func main() {
 	runTimes := 1*w + 5*k
 	// Use the pool with a function,
 	// set 10 to the capacity of goroutine pool and 1 second for expired duration.
-	p, _ := ants.NewPoolWithFunc(8, func(i interface{}) {
+	p, _ := ants.NewPoolWithFunc(6, func(i interface{}) {
 		Get(i)
 		wg.Done()
 	})
