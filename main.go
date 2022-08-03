@@ -21,7 +21,7 @@ func main() {
 	//runTimes := 999999999
 	k := 1000
 	w := 10000
-	runTimes := 2*w + 5*k
+	runTimes := 3 * w
 	// Use the pool with a function,
 	// set 10 to the capacity of goroutine pool and 1 second for expired duration.
 	p, _ := ants.NewPoolWithFunc(6, func(i interface{}) {
@@ -30,7 +30,7 @@ func main() {
 	})
 	defer p.Release()
 	// Submit tasks one by one.
-	for i := 1*w + 9*k; i < runTimes; i++ {
+	for i := 2*w + 5*k; i < runTimes; i++ {
 		wg.Add(1)
 		_ = p.Invoke(int64(i))
 	}
