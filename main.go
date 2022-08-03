@@ -16,7 +16,10 @@ func init() {
 
 var wg sync.WaitGroup
 
+var isContinue bool
+
 func main() {
+	isContinue = true
 	defer ants.Release()
 	//runTimes := 999999999
 	k := 1000
@@ -31,22 +34,34 @@ func main() {
 	defer p.Release()
 	// Submit tasks one by one.
 	for i := 3 * w; i < runTimes; i++ {
+		if !isContinue {
+			util.Log().Error("正在结束任务")
+			break
+		}
 		wg.Add(1)
 		_ = p.Invoke(int64(i))
 	}
 	wg.Wait()
-
 }
 
 func Get(i interface{}) {
 	n := i.(int64)
-	rand.Seed(time.Now().UnixNano())
-	count := rand.Intn(20)
-	util.Log().Info("%v开始,休眠%v", i, count)
-	time.Sleep(time.Second * time.Duration(count))
-	if service.GetUid(n) {
+	status := service.GetUid(n)
+	if status == 1 {
+		//id 存在
 		service.GetData(n)
-	} else {
-		util.Log().Error("出错啦")
+	} else if status == 0 {
+		util.Log().Error("出错啦,ID不存在")
+	} else if status == -1 {
+		util.Log().Error("请求被拦截，结束任务")
+		isContinue = false
+		return
+	}
+
+	{
+		rand.Seed(time.Now().UnixNano())
+		count := rand.Intn(30)
+		util.Log().Info("%v开始,休眠%v", i, count)
+		time.Sleep(time.Second * time.Duration(count))
 	}
 }

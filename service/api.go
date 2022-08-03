@@ -25,11 +25,11 @@ func GetData(uid int64) {
 
 }
 
-func GetUid(uid int64) bool {
+func GetUid(uid int64) int {
 	info, err := http.Get("https://api.bilibili.com/x/space/acc/info?mid=" + strconv.FormatInt(uid, 10) + "&jsonp=jsonp")
 	if err != nil {
 		util.Log().Panic("获取info信息失败, %s", err)
-		return false
+		return 0
 	}
 	body, err := io.ReadAll(info.Body)
 	defer func(Body io.ReadCloser) {
@@ -40,19 +40,22 @@ func GetUid(uid int64) bool {
 	}(info.Body)
 	if err != nil {
 		util.Log().Error("获取info信息失败, %s", err)
-		return false
+		return 0
 	}
 	var data model.Info
 	err = json.Unmarshal(body, &data)
 	if err != nil {
 		util.Log().Error("获取info信息失败, %s", err)
-		return false
+		return 0
 	}
-	if data.Code == -404 || data.Code == -412 {
+	if data.Code == -404 {
 		util.Log().Info("%v获取id失败啦,原因&v", uid, data.Message)
-		return false
+		return 0
+	} else if data.Code == -412 {
+		util.Log().Info("%v获取id失败啦,原因&v", uid, data.Message)
+		return -1
 	} else {
 		util.Log().Info("%v获取id成功", uid)
-		return true
+		return 1
 	}
 }
