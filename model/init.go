@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/techoc/bili/util"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"
 )
@@ -17,8 +17,8 @@ func Init() {
 		db  *gorm.DB
 		err error
 	)
-
-	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	dsn := "gslxk7szf8te:pscale_pw_gsbNtsuGKfW7Q2oP9a_8A5tMj3A9lPoEbil-Sd4LtTo@tcp(x00y3chn0h0c.us-east-1.psdb.cloud)/bili?tls=true"
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	//db.SetLogger(util.Log())
 	if err != nil {
