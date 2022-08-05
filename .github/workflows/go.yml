@@ -19,5 +19,6 @@ jobs:
           go-version: 1.18
 
       - name: run
-        env: ${{ secrets.DSN }}
+        env:
+          DSN: ${{ secrets.DSN }}
         run: go run main.go
