@@ -14,15 +14,17 @@ func GetData(uid int64) {
 	user.GetInfoData(uid)
 	user.GetStatData(uid)
 	user.GetUpStatData(uid)
+	//添加用户
+	user.AddUser()
+	util.Log().Info("%v 添加成功", uid)
 	// 查找用户
-	if _, err := model.FindUserByUid(uid); err != nil {
-		user.AddUser()
-		util.Log().Info("添加成功")
-	} else {
-		util.Log().Info("%v已存在,更新数据", user.Uid)
-		user.UpdateUser()
-	}
-
+	//if _, err := model.FindUserByUid(uid); err != nil {
+	//	user.AddUser()
+	//	util.Log().Info("添加成功")
+	//} else {
+	//	util.Log().Info("%v已存在,更新数据", user.Uid)
+	//	user.UpdateUser()
+	//}
 }
 
 func GetUid(uid int64) int {
