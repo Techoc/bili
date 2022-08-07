@@ -24,7 +24,7 @@ func main() {
 	//runTimes := 999999999
 	//k := 1000
 	w := 10000
-	runTimes := 11 * w
+	runTimes := 12 * w
 	// Use the pool with a function,
 	// set 10 to the capacity of goroutine pool and 1 second for expired duration.
 	p, _ := ants.NewPoolWithFunc(6, func(i interface{}) {
@@ -33,7 +33,7 @@ func main() {
 	})
 	defer p.Release()
 	// Submit tasks one by one.
-	for i := 10 * w; i < runTimes; i++ {
+	for i := 11 * w; i < runTimes; i++ {
 		if !isContinue {
 			util.Log().Error("正在结束任务")
 			break
